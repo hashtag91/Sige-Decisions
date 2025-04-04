@@ -1,7 +1,7 @@
 from PyQt5 import uic
 from PyQt5.QtWidgets import QApplication, QMainWindow, QTableWidgetItem, QFrame, QLabel, QVBoxLayout, QLineEdit, QHBoxLayout, QComboBox, QToolButton, QMessageBox, QFileDialog
-from PyQt5.QtGui import QIcon, QCursor
-from PyQt5.QtCore import Qt
+from PyQt5.QtGui import QIcon, QCursor, QFont
+from PyQt5.QtCore import Qt, QFont
 import rssrce
 import pandas as pd
 import numpy as np
@@ -65,10 +65,16 @@ class MyApp(QMainWindow):
         self.widget.reset_btn.clicked.connect(self.reset_slot)
         self.widget.export_2.clicked.connect(self.export_slot)
         self.setup()
+
+        # La page à afficher si la date est expirée
+        """
+        unavailable = QFrame()
+        unavailable_label = QLabel()
+        unavailable_label.setText("Session expirée. Veuillez contacter l'administrateur.")
+        unavailable_label.setStyleSheet("color: red; background: transparent; border: none")
+        unavailable_label.setFont()"""
+
         self.setCentralWidget(self.widget)
-        #self.df = pd.read_excel("BASE_PERSONNEL_2025 - BORE 130625 - TEST.xlsx")
-        #conn = sqlite3.connect("database.db")
-        #self.df.to_sql(name="academy",con=conn,index=False)
 
     def setup(self):
         academies = self.data['AE'].unique().tolist()
@@ -418,7 +424,8 @@ class MyApp(QMainWindow):
                     president_matricule = presidents_liste.iloc[i].Matricule
                     president_service = presidents_liste.iloc[i].Service
                     row_cells = table.rows[1].cells
-                    row_data = ["-", president_prenom, president_nom, president_matricule, president_service]
+                    numerotation = 1 # Numérotation des lignes de noms
+                    row_data = [str(numerotation), president_prenom, president_nom, president_matricule, president_service]
                     for i, text in enumerate(row_data):
                         row_cells[i].text = str(text)
 
@@ -426,7 +433,7 @@ class MyApp(QMainWindow):
                     doc.add_paragraph("\nRESPONSABLES ADJOINTS :", style="Heading 2")
 
                     # Création du second tableau
-                    table2 = doc.add_table(rows=df.shape[0], cols=5)
+                    table2 = doc.add_table(rows=df.shape[0]+1, cols=5)
                     table2.style = "Table Grid"
 
                     # En-tête du tableau
@@ -437,11 +444,12 @@ class MyApp(QMainWindow):
                     # Ajouter les responsables adjoints
                     rows_data = []
                     for i in range(df.shape[0]):
-                        rows_data.append(["-",df.iloc[i]["Prénom"],df.iloc[i].Nom, df.iloc[i].Matricule, df.iloc[i].Service])
-
+                        numerotation += 1
+                        rows_data.append([str(numerotation),df.iloc[i]["Prénom"],df.iloc[i].Nom, df.iloc[i].Matricule, df.iloc[i].Service])
+                    numerotation = 1
                     for i, row_data in enumerate(rows_data):
                         try:
-                            row_cells = table2.rows[i].cells
+                            row_cells = table2.rows[i+1].cells
                             for j, text in enumerate(row_data):
                                 row_cells[j].text = text
                         except Exception as e:
