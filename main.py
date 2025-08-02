@@ -1,7 +1,7 @@
 from PyQt5 import uic
 from PyQt5.QtWidgets import QApplication, QMainWindow, QTableWidgetItem, QFrame, QLabel, QVBoxLayout, QLineEdit, QHBoxLayout, QComboBox, QToolButton, QMessageBox, QFileDialog
 from PyQt5.QtGui import QIcon, QCursor, QFont
-from PyQt5.QtCore import Qt, QFont
+from PyQt5.QtCore import Qt
 import rssrce
 import pandas as pd
 import numpy as np
@@ -14,6 +14,7 @@ from docx.oxml import OxmlElement
 import os
 import sys
 import logging
+from datetime import date, timedelta
 
 # Configurer le logger pour écrire dans un fichier
 logging.basicConfig(filename="log.txt", level=logging.ERROR, format="%(asctime)s - %(levelname)s - %(message)s")
@@ -67,14 +68,23 @@ class MyApp(QMainWindow):
         self.setup()
 
         # La page à afficher si la date est expirée
-        """
         unavailable = QFrame()
         unavailable_label = QLabel()
         unavailable_label.setText("Session expirée. Veuillez contacter l'administrateur.")
         unavailable_label.setStyleSheet("color: red; background: transparent; border: none")
-        unavailable_label.setFont()"""
+        unavailable_label.setFont(QFont("Arial Black", 18, QFont.Bold))
+        unavailable_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        unavailable_layout = QVBoxLayout()
+        unavailable_layout.addWidget(unavailable_label)
+        unavailable.setLayout(unavailable_layout)
 
-        self.setCentralWidget(self.widget)
+        start = date(2025,4,4)
+        today = date.today()
+
+        if start + timedelta(days=91) >= today:
+            self.setCentralWidget(self.widget)
+        else:
+            self.setCentralWidget(unavailable)
 
     def setup(self):
         academies = self.data['AE'].unique().tolist()
@@ -719,14 +729,14 @@ def presidents(academie_combo:QComboBox):
         conn = sqlite3.connect("database.db")
         df = pd.read_sql_query("select * from academy",conn)
         president = df[df['Responsabilité'].isin(["1-Président", "1-président", "Président", "président", "President", "president"])].copy()
-        president.fillna("",inplace=True)
+        president.fillna("N/A",inplace=True)
         president.reset_index()
         return president
     else:
         conn = sqlite3.connect("database.db")
         df = pd.read_sql_query(f"select * from academy WHERE AE='{academie_combo.currentText()}'",conn)
         president = df[df['Responsabilité'].isin(["1-Président", "1-président", "Président", "président", "President", "president"])].copy()
-        president.fillna("",inplace=True)
+        president.fillna("N/A",inplace=True)
         president.reset_index()
         return president
 
