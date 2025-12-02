@@ -18499,3 +18499,260 @@ Traceback (most recent call last):
   File "C:\Users\LENOVO\Desktop\Academy\source\env\lib\site-packages\pandas\core\indexing.py", line 1685, in _validate_integer
     raise IndexError("single positional indexer is out-of-bounds")
 IndexError: single positional indexer is out-of-bounds
+2025-12-01 04:25:14,494 - ERROR - Une erreur est survenue
+Traceback (most recent call last):
+  File "C:\Users\LENOVO\Desktop\Projets Kebe\Sige Decision\source\main.py", line 464, in generer_word
+    row_cells[j].text = text
+  File "C:\Users\LENOVO\Desktop\SaleApp\env\lib\site-packages\docx\table.py", line 284, in text
+    r.text = text
+  File "C:\Users\LENOVO\Desktop\SaleApp\env\lib\site-packages\docx\oxml\text\run.py", line 143, in text
+    _RunContentAppender.append_to_run_from_text(self, text)
+  File "C:\Users\LENOVO\Desktop\SaleApp\env\lib\site-packages\docx\oxml\text\run.py", line 279, in append_to_run_from_text
+    appender.add_text(text)
+  File "C:\Users\LENOVO\Desktop\SaleApp\env\lib\site-packages\docx\oxml\text\run.py", line 283, in add_text
+    for char in text:
+TypeError: 'NoneType' object is not iterable
+2025-12-01 04:25:14,782 - ERROR - Une erreur est survenue
+Traceback (most recent call last):
+  File "C:\Users\LENOVO\Desktop\Projets Kebe\Sige Decision\source\main.py", line 464, in generer_word
+    row_cells[j].text = text
+  File "C:\Users\LENOVO\Desktop\SaleApp\env\lib\site-packages\docx\table.py", line 284, in text
+    r.text = text
+  File "C:\Users\LENOVO\Desktop\SaleApp\env\lib\site-packages\docx\oxml\text\run.py", line 143, in text
+    _RunContentAppender.append_to_run_from_text(self, text)
+  File "C:\Users\LENOVO\Desktop\SaleApp\env\lib\site-packages\docx\oxml\text\run.py", line 279, in append_to_run_from_text
+    appender.add_text(text)
+  File "C:\Users\LENOVO\Desktop\SaleApp\env\lib\site-packages\docx\oxml\text\run.py", line 283, in add_text
+    for char in text:
+TypeError: 'NoneType' object is not iterable
+2025-12-01 04:25:16,129 - ERROR - Une erreur est survenue
+Traceback (most recent call last):
+  File "C:\Users\LENOVO\Desktop\Projets Kebe\Sige Decision\source\main.py", line 464, in generer_word
+    row_cells[j].text = text
+  File "C:\Users\LENOVO\Desktop\SaleApp\env\lib\site-packages\docx\table.py", line 284, in text
+    r.text = text
+  File "C:\Users\LENOVO\Desktop\SaleApp\env\lib\site-packages\docx\oxml\text\run.py", line 143, in text
+    _RunContentAppender.append_to_run_from_text(self, text)
+  File "C:\Users\LENOVO\Desktop\SaleApp\env\lib\site-packages\docx\oxml\text\run.py", line 279, in append_to_run_from_text
+    appender.add_text(text)
+  File "C:\Users\LENOVO\Desktop\SaleApp\env\lib\site-packages\docx\oxml\text\run.py", line 283, in add_text
+    for char in text:
+TypeError: 'NoneType' object is not iterable
+2025-12-01 04:25:30,878 - ERROR - Une erreur est survenue
+Traceback (most recent call last):
+  File "C:\Users\LENOVO\Desktop\Projets Kebe\Sige Decision\source\main.py", line 432, in generer_word
+    president_prenom = presidents_liste.iloc[i]['Prénom']
+  File "C:\Users\LENOVO\Desktop\SaleApp\env\lib\site-packages\pandas\core\indexing.py", line 1191, in __getitem__
+    return self._getitem_axis(maybe_callable, axis=axis)
+  File "C:\Users\LENOVO\Desktop\SaleApp\env\lib\site-packages\pandas\core\indexing.py", line 1752, in _getitem_axis
+    self._validate_integer(key, axis)
+  File "C:\Users\LENOVO\Desktop\SaleApp\env\lib\site-packages\pandas\core\indexing.py", line 1685, in _validate_integer
+    raise IndexError("single positional indexer is out-of-bounds")
+IndexError: single positional indexer is out-of-bounds
+2025-12-01 04:26:43,581 - ERROR - Une erreur est survenue
+Traceback (most recent call last):
+  File "C:\Users\LENOVO\Desktop\Projets Kebe\Sige Decision\source\main.py", line 464, in generer_word
+    row_cells[j].text = text
+  File "C:\Users\LENOVO\Desktop\SaleApp\env\lib\site-packages\docx\table.py", line 284, in text
+    r.text = text
+  File "C:\Users\LENOVO\Desktop\SaleApp\env\lib\site-packages\docx\oxml\text\run.py", line 143, in text
+    _RunContentAppender.append_to_run_from_text(self, text)
+  File "C:\Users\LENOVO\Desktop\SaleApp\env\lib\site-packages\docx\oxml\text\run.py", line 279, in append_to_run_from_text
+    appender.add_text(text)
+  File "C:\Users\LENOVO\Desktop\SaleApp\env\lib\site-packages\docx\oxml\text\run.py", line 283, in add_text
+    for char in text:
+TypeError: 'NoneType' object is not iterable
+2025-12-01 04:26:43,810 - ERROR - Une erreur est survenue
+Traceback (most recent call last):
+  File "C:\Users\LENOVO\Desktop\Projets Kebe\Sige Decision\source\main.py", line 464, in generer_word
+    row_cells[j].text = text
+  File "C:\Users\LENOVO\Desktop\SaleApp\env\lib\site-packages\docx\table.py", line 284, in text
+    r.text = text
+  File "C:\Users\LENOVO\Desktop\SaleApp\env\lib\site-packages\docx\oxml\text\run.py", line 143, in text
+    _RunContentAppender.append_to_run_from_text(self, text)
+  File "C:\Users\LENOVO\Desktop\SaleApp\env\lib\site-packages\docx\oxml\text\run.py", line 279, in append_to_run_from_text
+    appender.add_text(text)
+  File "C:\Users\LENOVO\Desktop\SaleApp\env\lib\site-packages\docx\oxml\text\run.py", line 283, in add_text
+    for char in text:
+TypeError: 'NoneType' object is not iterable
+2025-12-01 04:26:45,217 - ERROR - Une erreur est survenue
+Traceback (most recent call last):
+  File "C:\Users\LENOVO\Desktop\Projets Kebe\Sige Decision\source\main.py", line 464, in generer_word
+    row_cells[j].text = text
+  File "C:\Users\LENOVO\Desktop\SaleApp\env\lib\site-packages\docx\table.py", line 284, in text
+    r.text = text
+  File "C:\Users\LENOVO\Desktop\SaleApp\env\lib\site-packages\docx\oxml\text\run.py", line 143, in text
+    _RunContentAppender.append_to_run_from_text(self, text)
+  File "C:\Users\LENOVO\Desktop\SaleApp\env\lib\site-packages\docx\oxml\text\run.py", line 279, in append_to_run_from_text
+    appender.add_text(text)
+  File "C:\Users\LENOVO\Desktop\SaleApp\env\lib\site-packages\docx\oxml\text\run.py", line 283, in add_text
+    for char in text:
+TypeError: 'NoneType' object is not iterable
+2025-12-01 04:27:14,972 - ERROR - Une erreur est survenue
+Traceback (most recent call last):
+  File "C:\Users\LENOVO\Desktop\Projets Kebe\Sige Decision\source\main.py", line 432, in generer_word
+    president_prenom = presidents_liste.iloc[i]['Prénom']
+  File "C:\Users\LENOVO\Desktop\SaleApp\env\lib\site-packages\pandas\core\indexing.py", line 1191, in __getitem__
+    return self._getitem_axis(maybe_callable, axis=axis)
+  File "C:\Users\LENOVO\Desktop\SaleApp\env\lib\site-packages\pandas\core\indexing.py", line 1752, in _getitem_axis
+    self._validate_integer(key, axis)
+  File "C:\Users\LENOVO\Desktop\SaleApp\env\lib\site-packages\pandas\core\indexing.py", line 1685, in _validate_integer
+    raise IndexError("single positional indexer is out-of-bounds")
+IndexError: single positional indexer is out-of-bounds
+2025-12-01 04:32:15,283 - ERROR - Une erreur est survenue
+Traceback (most recent call last):
+  File "C:\Users\LENOVO\Desktop\Projets Kebe\Sige Decision\source\main.py", line 465, in generer_word
+    row_cells[j].text = text
+  File "C:\Users\LENOVO\Desktop\SaleApp\env\lib\site-packages\docx\table.py", line 284, in text
+    r.text = text
+  File "C:\Users\LENOVO\Desktop\SaleApp\env\lib\site-packages\docx\oxml\text\run.py", line 143, in text
+    _RunContentAppender.append_to_run_from_text(self, text)
+  File "C:\Users\LENOVO\Desktop\SaleApp\env\lib\site-packages\docx\oxml\text\run.py", line 279, in append_to_run_from_text
+    appender.add_text(text)
+  File "C:\Users\LENOVO\Desktop\SaleApp\env\lib\site-packages\docx\oxml\text\run.py", line 283, in add_text
+    for char in text:
+TypeError: 'NoneType' object is not iterable
+2025-12-01 04:32:15,376 - ERROR - Une erreur est survenue
+Traceback (most recent call last):
+  File "C:\Users\LENOVO\Desktop\Projets Kebe\Sige Decision\source\main.py", line 465, in generer_word
+    row_cells[j].text = text
+  File "C:\Users\LENOVO\Desktop\SaleApp\env\lib\site-packages\docx\table.py", line 284, in text
+    r.text = text
+  File "C:\Users\LENOVO\Desktop\SaleApp\env\lib\site-packages\docx\oxml\text\run.py", line 143, in text
+    _RunContentAppender.append_to_run_from_text(self, text)
+  File "C:\Users\LENOVO\Desktop\SaleApp\env\lib\site-packages\docx\oxml\text\run.py", line 279, in append_to_run_from_text
+    appender.add_text(text)
+  File "C:\Users\LENOVO\Desktop\SaleApp\env\lib\site-packages\docx\oxml\text\run.py", line 283, in add_text
+    for char in text:
+TypeError: 'NoneType' object is not iterable
+2025-12-01 04:32:16,064 - ERROR - Une erreur est survenue
+Traceback (most recent call last):
+  File "C:\Users\LENOVO\Desktop\Projets Kebe\Sige Decision\source\main.py", line 465, in generer_word
+    row_cells[j].text = text
+  File "C:\Users\LENOVO\Desktop\SaleApp\env\lib\site-packages\docx\table.py", line 284, in text
+    r.text = text
+  File "C:\Users\LENOVO\Desktop\SaleApp\env\lib\site-packages\docx\oxml\text\run.py", line 143, in text
+    _RunContentAppender.append_to_run_from_text(self, text)
+  File "C:\Users\LENOVO\Desktop\SaleApp\env\lib\site-packages\docx\oxml\text\run.py", line 279, in append_to_run_from_text
+    appender.add_text(text)
+  File "C:\Users\LENOVO\Desktop\SaleApp\env\lib\site-packages\docx\oxml\text\run.py", line 283, in add_text
+    for char in text:
+TypeError: 'NoneType' object is not iterable
+2025-12-01 04:32:25,398 - ERROR - Une erreur est survenue
+Traceback (most recent call last):
+  File "C:\Users\LENOVO\Desktop\Projets Kebe\Sige Decision\source\main.py", line 433, in generer_word
+    president_prenom = presidents_liste.iloc[i]['Prénom']
+  File "C:\Users\LENOVO\Desktop\SaleApp\env\lib\site-packages\pandas\core\indexing.py", line 1191, in __getitem__
+    return self._getitem_axis(maybe_callable, axis=axis)
+  File "C:\Users\LENOVO\Desktop\SaleApp\env\lib\site-packages\pandas\core\indexing.py", line 1752, in _getitem_axis
+    self._validate_integer(key, axis)
+  File "C:\Users\LENOVO\Desktop\SaleApp\env\lib\site-packages\pandas\core\indexing.py", line 1685, in _validate_integer
+    raise IndexError("single positional indexer is out-of-bounds")
+IndexError: single positional indexer is out-of-bounds
+2025-12-01 05:30:16,203 - ERROR - Une erreur est survenue
+Traceback (most recent call last):
+  File "C:\Users\LENOVO\Desktop\Projets Kebe\Sige Decision\source\main.py", line 434, in generer_word
+    president_prenom = presidents_liste.iloc[i]['Prénom']
+  File "C:\Users\LENOVO\Desktop\SaleApp\env\lib\site-packages\pandas\core\indexing.py", line 1191, in __getitem__
+    return self._getitem_axis(maybe_callable, axis=axis)
+  File "C:\Users\LENOVO\Desktop\SaleApp\env\lib\site-packages\pandas\core\indexing.py", line 1752, in _getitem_axis
+    self._validate_integer(key, axis)
+  File "C:\Users\LENOVO\Desktop\SaleApp\env\lib\site-packages\pandas\core\indexing.py", line 1685, in _validate_integer
+    raise IndexError("single positional indexer is out-of-bounds")
+IndexError: single positional indexer is out-of-bounds
+2025-12-01 05:32:05,925 - ERROR - Une erreur est survenue
+Traceback (most recent call last):
+  File "C:\Users\LENOVO\Desktop\Projets Kebe\Sige Decision\source\main.py", line 434, in generer_word
+    print(presidents_liste.iloc[i])
+  File "C:\Users\LENOVO\Desktop\SaleApp\env\lib\site-packages\pandas\core\indexing.py", line 1191, in __getitem__
+    return self._getitem_axis(maybe_callable, axis=axis)
+  File "C:\Users\LENOVO\Desktop\SaleApp\env\lib\site-packages\pandas\core\indexing.py", line 1752, in _getitem_axis
+    self._validate_integer(key, axis)
+  File "C:\Users\LENOVO\Desktop\SaleApp\env\lib\site-packages\pandas\core\indexing.py", line 1685, in _validate_integer
+    raise IndexError("single positional indexer is out-of-bounds")
+IndexError: single positional indexer is out-of-bounds
+2025-12-01 05:35:31,299 - ERROR - Une erreur est survenue
+Traceback (most recent call last):
+  File "C:\Users\LENOVO\Desktop\Projets Kebe\Sige Decision\source\main.py", line 435, in generer_word
+    print(presidents_liste.iloc[i])
+  File "C:\Users\LENOVO\Desktop\SaleApp\env\lib\site-packages\pandas\core\indexing.py", line 1191, in __getitem__
+    return self._getitem_axis(maybe_callable, axis=axis)
+  File "C:\Users\LENOVO\Desktop\SaleApp\env\lib\site-packages\pandas\core\indexing.py", line 1752, in _getitem_axis
+    self._validate_integer(key, axis)
+  File "C:\Users\LENOVO\Desktop\SaleApp\env\lib\site-packages\pandas\core\indexing.py", line 1685, in _validate_integer
+    raise IndexError("single positional indexer is out-of-bounds")
+IndexError: single positional indexer is out-of-bounds
+2025-12-01 05:37:48,515 - ERROR - Une erreur est survenue
+Traceback (most recent call last):
+  File "C:\Users\LENOVO\Desktop\Projets Kebe\Sige Decision\source\main.py", line 435, in generer_word
+    president_prenom = presidents_liste.iloc[i]['Prénom']
+  File "C:\Users\LENOVO\Desktop\SaleApp\env\lib\site-packages\pandas\core\indexing.py", line 1191, in __getitem__
+    return self._getitem_axis(maybe_callable, axis=axis)
+  File "C:\Users\LENOVO\Desktop\SaleApp\env\lib\site-packages\pandas\core\indexing.py", line 1752, in _getitem_axis
+    self._validate_integer(key, axis)
+  File "C:\Users\LENOVO\Desktop\SaleApp\env\lib\site-packages\pandas\core\indexing.py", line 1685, in _validate_integer
+    raise IndexError("single positional indexer is out-of-bounds")
+IndexError: single positional indexer is out-of-bounds
+2025-12-01 05:42:02,866 - ERROR - Une erreur est survenue
+Traceback (most recent call last):
+  File "C:\Users\LENOVO\Desktop\Projets Kebe\Sige Decision\source\main.py", line 435, in generer_word
+    president_prenom = presidents_liste.iloc[i]['Prénom']
+  File "C:\Users\LENOVO\Desktop\SaleApp\env\lib\site-packages\pandas\core\indexing.py", line 1191, in __getitem__
+    return self._getitem_axis(maybe_callable, axis=axis)
+  File "C:\Users\LENOVO\Desktop\SaleApp\env\lib\site-packages\pandas\core\indexing.py", line 1752, in _getitem_axis
+    self._validate_integer(key, axis)
+  File "C:\Users\LENOVO\Desktop\SaleApp\env\lib\site-packages\pandas\core\indexing.py", line 1685, in _validate_integer
+    raise IndexError("single positional indexer is out-of-bounds")
+IndexError: single positional indexer is out-of-bounds
+2025-12-01 05:44:12,770 - ERROR - Une erreur est survenue
+Traceback (most recent call last):
+  File "C:\Users\LENOVO\Desktop\Projets Kebe\Sige Decision\source\main.py", line 435, in generer_word
+    president_prenom = presidents_liste.iloc[i]['Prénom']
+  File "C:\Users\LENOVO\Desktop\SaleApp\env\lib\site-packages\pandas\core\indexing.py", line 1191, in __getitem__
+    return self._getitem_axis(maybe_callable, axis=axis)
+  File "C:\Users\LENOVO\Desktop\SaleApp\env\lib\site-packages\pandas\core\indexing.py", line 1752, in _getitem_axis
+    self._validate_integer(key, axis)
+  File "C:\Users\LENOVO\Desktop\SaleApp\env\lib\site-packages\pandas\core\indexing.py", line 1685, in _validate_integer
+    raise IndexError("single positional indexer is out-of-bounds")
+IndexError: single positional indexer is out-of-bounds
+2025-12-01 05:51:00,734 - ERROR - Une erreur est survenue
+Traceback (most recent call last):
+  File "C:\Users\LENOVO\Desktop\Projets Kebe\Sige Decision\source\main.py", line 436, in generer_word
+    president_prenom = current_president['Prénom'] or ""
+  File "C:\Users\LENOVO\Desktop\SaleApp\env\lib\site-packages\pandas\core\generic.py", line 1577, in __nonzero__
+    raise ValueError(
+ValueError: The truth value of a Series is ambiguous. Use a.empty, a.bool(), a.item(), a.any() or a.all().
+2025-12-01 06:17:56,731 - ERROR - Une erreur est survenue
+Traceback (most recent call last):
+  File "C:\Users\LENOVO\Desktop\Projets Kebe\Sige Decision\source\main.py", line 634, in run
+    file_path, _ = QFileDialog.getSaveFileName(self, "Enregistrer le fichier", "", "Documents Word (*.docx);;Tous les fichiers (*)", options=options)
+TypeError: getSaveFileName(parent: Optional[QWidget] = None, caption: Optional[str] = '', directory: Optional[str] = '', filter: Optional[str] = '', initialFilter: Optional[str] = '', options: Union[QFileDialog.Options, QFileDialog.Option] = 0): argument 1 has unexpected type 'GenerateWordThread'
+2025-12-01 06:21:21,808 - ERROR - Une erreur est survenue
+Traceback (most recent call last):
+  File "C:\Users\LENOVO\Desktop\Projets Kebe\Sige Decision\source\main.py", line 633, in run
+    self.progress.emit(int((i*100)/dfs.shape[0]))
+AttributeError: 'list' object has no attribute 'shape'
+2025-12-01 07:14:56,139 - ERROR - Une erreur est survenue
+Traceback (most recent call last):
+  File "C:\Users\LENOVO\Desktop\Projets Kebe\Sige Decision\source\main.py", line 577, in run
+    academieCenterLen = main_df[main_df['AE']==df.iloc[0,0]].Center.unique().tolist() # Obtenir le nombre de centres de cette académie
+  File "C:\Users\LENOVO\Desktop\SaleApp\env\lib\site-packages\pandas\core\generic.py", line 6318, in __getattr__
+    return object.__getattribute__(self, name)
+AttributeError: 'DataFrame' object has no attribute 'Center'
+2025-12-02 07:37:11,123 - ERROR - Une erreur est survenue
+Traceback (most recent call last):
+  File "C:\Users\LENOVO\Desktop\Projets Kebe\Sige Decision\source\main.py", line 739, in run
+    doc.save(file_path)
+  File "C:\Users\LENOVO\Desktop\Projets Kebe\Sige Decision\source\env\lib\site-packages\docx\document.py", line 149, in save
+    self._part.save(path_or_stream)
+  File "C:\Users\LENOVO\Desktop\Projets Kebe\Sige Decision\source\env\lib\site-packages\docx\parts\document.py", line 108, in save
+    self.package.save(path_or_stream)
+  File "C:\Users\LENOVO\Desktop\Projets Kebe\Sige Decision\source\env\lib\site-packages\docx\opc\package.py", line 167, in save
+    PackageWriter.write(pkg_file, self.rels, self.parts)
+  File "C:\Users\LENOVO\Desktop\Projets Kebe\Sige Decision\source\env\lib\site-packages\docx\opc\pkgwriter.py", line 34, in write
+    phys_writer = PhysPkgWriter(pkg_file)
+  File "C:\Users\LENOVO\Desktop\Projets Kebe\Sige Decision\source\env\lib\site-packages\docx\opc\phys_pkg.py", line 109, in __init__
+    self._zipf = ZipFile(pkg_file, "w", compression=ZIP_DEFLATED)
+  File "C:\Users\LENOVO\AppData\Local\Programs\Python\Python39\lib\zipfile.py", line 1248, in __init__
+    self.fp = io.open(file, filemode)
+PermissionError: [Errno 13] Permission denied: 'C:/Users/LENOVO/Desktop/Projets Kebe/Sige Decision/source/test.docx'

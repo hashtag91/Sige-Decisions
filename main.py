@@ -1,7 +1,7 @@
 from PyQt5 import uic
-from PyQt5.QtWidgets import QApplication, QMainWindow, QTableWidgetItem, QFrame, QLabel, QVBoxLayout, QLineEdit, QHBoxLayout, QComboBox, QToolButton, QMessageBox, QFileDialog
-from PyQt5.QtGui import QIcon, QCursor, QFont
-from PyQt5.QtCore import Qt
+from PyQt5.QtWidgets import QApplication, QMainWindow, QTableWidgetItem, QFrame, QLabel, QVBoxLayout, QLineEdit, QHBoxLayout, QComboBox, QToolButton, QMessageBox, QFileDialog, QProgressBar, QHeaderView, QSizePolicy, QDialog, QWidget, QGraphicsBlurEffect
+from PyQt5.QtGui import QIcon, QCursor, QFont, QMovie
+from PyQt5.QtCore import Qt, QThread, pyqtSignal
 import rssrce
 import pandas as pd
 import numpy as np
@@ -58,7 +58,21 @@ class MyApp(QMainWindow):
             con.close()
         fichier_ui = resource_path("main.ui")
         self.widget = uic.loadUi(fichier_ui)  # Charger le fichier .ui
-        self.widget.table.setSizePolicy(self.widget.table.sizePolicy().Expanding, self.widget.table.sizePolicy().Expanding)
+        self.statusBar().setStyleSheet("""
+            background-color: qlineargradient(
+                spread:pad,
+                x1:0.481, y1:0.0397727,
+                x2:0.497373, y2:0.517,
+                stop:0.109 rgba(10, 21, 72, 255),
+                stop:1 rgba(24, 29, 52, 255)
+            );
+        """)
+        self.widget.table.setSizePolicy(
+            QSizePolicy.Expanding,
+            QSizePolicy.Expanding
+        )
+        self.widget.table.horizontalHeader().setStretchLastSection(True)
+        self.widget.table.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
         self.widget.add_button.clicked.connect(self.add_slot)
         self.widget.generer.clicked.connect(self.generer_word)
         self.widget.upload_btn.clicked.connect(self.upload)
@@ -81,7 +95,7 @@ class MyApp(QMainWindow):
         start = date(2025,4,4)
         today = date.today()
 
-        if start + timedelta(days=91) >= today:
+        if start + timedelta(days=2000) >= today:
             self.setCentralWidget(self.widget)
         else:
             self.setCentralWidget(unavailable)
@@ -98,7 +112,32 @@ class MyApp(QMainWindow):
 
         for row in range(self.data.shape[0]):
             for col in range(self.data.shape[1]):
-                self.widget.table.setItem(row, col, QTableWidgetItem(str(self.data.iat[row, col])))  # Remplissage des cellules
+                item = QTableWidgetItem(str(self.data.iat[row, col]))
+                font = QFont()
+                font.setPointSize(9)  # taille de police souhaitée
+                item.setFont(font)
+                self.widget.table.setItem(row, col, item)  # Remplissage des cellules
+        self.statusBarProgress = QProgressBar()
+        self.statusBarProgress.setStyleSheet("""
+            QProgressBar {
+                background-color: rgba(255, 255, 255, 0.12);
+                border-radius: 10px;
+                text-align: center;
+                color: #eaeaea;
+                height: 14px;
+            }
+
+            QProgressBar::chunk {
+                background-color: rgba(90, 160, 255, 0.85);
+                border-radius: 10px;
+            }
+        """)
+        self.statusBarProgress.setMinimumWidth(300)
+        self.statusBarProgress.setVisible(False)
+        self.statusBar().addPermanentWidget(self.statusBarProgress, 2)
+        version_label = QLabel("Sige Decision v26")
+        version_label.setStyleSheet("background: transparent; color: #fff;")
+        self.statusBar().addPermanentWidget(version_label)
     def combo_change(self):
         academie_selected = self.widget.academy_combo.currentText()
         if academie_selected != "Tout":
@@ -113,7 +152,11 @@ class MyApp(QMainWindow):
 
                 for row in range(self.data.shape[0]):
                     for col in range(self.data.shape[1]):
-                        self.widget.table.setItem(row, col, QTableWidgetItem(str(self.data.iat[row, col])))  # Remplissage des cellules
+                        item = QTableWidgetItem(str(self.data.iat[row, col]))
+                        font = QFont()
+                        font.setPointSize(9)  # taille de police souhaitée
+                        item.setFont(font)
+                        self.widget.table.setItem(row, col, item)  # Remplissage des cellules
             except:
                 columns = ["AE","Centre","Responsabilité","Prénom","Nom","Matricule","Service","Catégorie","Poste","Telephone","Examen","Nb salle"]
                 self.widget.table.setRowCount(len(columns))
@@ -130,7 +173,11 @@ class MyApp(QMainWindow):
 
                 for row in range(self.data.shape[0]):
                     for col in range(self.data.shape[1]):
-                        self.widget.table.setItem(row, col, QTableWidgetItem(str(self.data.iat[row, col])))  # Remplissage des cellules
+                        item = QTableWidgetItem(str(self.data.iat[row, col]))
+                        font = QFont()
+                        font.setPointSize(9)  # taille de police souhaitée
+                        item.setFont(font)
+                        self.widget.table.setItem(row, col, item)  # Remplissage des cellules
             except:
                 columns = ["AE","Centre","Responsabilité","Prénom","Nom","Matricule","Service","Catégorie","Poste","Telephone","Examen","Nb salle"]
                 self.widget.table.setRowCount(len(columns))
@@ -141,6 +188,7 @@ class MyApp(QMainWindow):
         if file_path:
             try:
                 new_file = pd.read_excel(file_path)
+                new_file.fillna("N/A", inplace=True)
                 conn = sqlite3.connect("database.db")
                 existed_data = pd.read_sql_query("select * from academy",conn)
                 concatened_df = pd.concat([existed_data,new_file], ignore_index=True)
@@ -366,122 +414,21 @@ class MyApp(QMainWindow):
                 self.widget.table.clear()
         except Exception as e:
             logging.error("Une erreur est survenue", exc_info=True)  # Enregistre l'erreur avec stack trace
+
     def generer_word(self):
-        try:
-            con = sqlite3.connect("database.db")
-            main_df = pd.read_sql_query("select * from academy",con)
+        loading_dialog = LoadingPage()
+        loading_dialog.show()
+        self.statusBarProgress.setVisible(True)
+        thread = GenerateWordThread(self)
+        thread.progress.connect(lambda value: self.statusBarProgress.setValue(value))
+        thread.start()
+        thread.finish.connect(lambda: loading_dialog.close())
+        thread.finish.connect(lambda success: QMessageBox.information(self, "Succès", "Décision générée avec succès !") if success else QMessageBox.warning(self, "Annulé", "Génération du document annulée."))
+        thread.finish.connect(lambda: self.statusBarProgress.setValue(0))
+        thread.finish.connect(lambda: self.statusBarProgress.setVisible(False))
+        thread.finish.connect(thread.quit)
+        thread.finish.connect(thread.wait)
 
-            dfs = query(self.widget.academy_combo)
-            academies = main_df['AE'].unique().tolist() # Avoir la liste des academies
-            academies_dict = {} # Dictionnaire qui contiendra les noms d'academies comme clé et 0 comme valeur
-            for academie in academies:
-                academies_dict[academie] = 0
-            doc = Document()
-
-            for i,df in enumerate(dfs):
-                if not df.empty:
-                    if academies_dict[df.iloc[0,0]] == 0: # Si la valeur d'une academie est 0 donc elle n'est pas encore afficher
-                        titre = doc.add_paragraph(style="Heading 1")
-                        titre.add_run(f"ACADÉMIE D'ENSEIGNEMENT DE : {df.iloc[0,0]}").bold = True
-                        titre.alignment = WD_PARAGRAPH_ALIGNMENT.CENTER
-                        academies_dict[df.iloc[0,0]] += 1
-
-                        # Extraction des superviseurs
-                        superviseurs = main_df[main_df['Nb salle'].isnull()]
-                        superviseurs = superviseurs[superviseurs['AE']==df.iloc[0,0]]
-
-                        # Ajouter la section RESPONSABLE
-                        doc.add_paragraph("SUPERVISEURS :", style="Heading 2")
-                        # Création du tableau principal
-                        table = doc.add_table(rows=2, cols=5)
-                        table.style = "Table Grid"
-                        # Remplir l'en-tête du tableau
-                        hdr_cells = table.rows[0].cells
-                        headers = ["N° d'ordre", "Prénoms", "Noms", "N° Mle", "Service"]
-                        for h, text in enumerate(headers):
-                            hdr_cells[h].text = text
-                        for i in range(superviseurs.shape[0]):
-                            superviseur_prenom = superviseurs.iloc[i]['Prénom']
-                            superviseur_nom = superviseurs.iloc[i]['Nom']
-                            superviseur_matricule = superviseurs.iloc[i]['Matricule']
-                            superviseur_service = superviseurs.iloc[i]['Service']
-                            row_cells = table.rows[i].cells
-                            row_data = ["-", superviseur_prenom, superviseur_nom, superviseur_matricule, superviseur_service]
-                            for i, text in enumerate(row_data):
-                                row_cells[i].text = str(text)
-                        doc.add_paragraph("", style="Heading 2")
-                    # Ajouter le titre du centre
-                    centre = df.iloc[0,1]
-                    salle = int(df.iloc[0,-1])
-                    titre_a = doc.add_paragraph()
-                    titre_a.add_run(f"CENTRE DU {centre}").bold = True
-                    titre_a.alignment = WD_PARAGRAPH_ALIGNMENT.LEFT
-                    titre_a.add_run(" " * 50 + f"{str(salle)}").bold = True  # Espacer le numéro du centre
-                    # Ajouter la section RESPONSABLE
-                    doc.add_paragraph("RESPONSABLE :", style="Heading 2")
-                    # Création du tableau principal
-                    table = doc.add_table(rows=2, cols=5)
-                    table.style = "Table Grid"
-                    # Remplir l'en-tête du tableau
-                    hdr_cells = table.rows[0].cells
-                    headers = ["N° d'ordre", "Prénoms", "Noms", "N° Mle", "Service"]
-                    for h, text in enumerate(headers):
-                        hdr_cells[h].text = text
-                    # Ajouter le responsable
-                    presidents_liste = presidents(self.widget.academy_combo)
-                    president_prenom = presidents_liste.iloc[i]['Prénom']
-                    president_nom = presidents_liste.iloc[i].Nom
-                    president_matricule = presidents_liste.iloc[i].Matricule
-                    president_service = presidents_liste.iloc[i].Service
-                    row_cells = table.rows[1].cells
-                    numerotation = 1 # Numérotation des lignes de noms
-                    row_data = [str(numerotation), president_prenom, president_nom, president_matricule, president_service]
-                    for i, text in enumerate(row_data):
-                        row_cells[i].text = str(text)
-
-                    # Ajouter la section RESPONSABLES ADJOINTS
-                    doc.add_paragraph("\nRESPONSABLES ADJOINTS :", style="Heading 2")
-
-                    # Création du second tableau
-                    table2 = doc.add_table(rows=df.shape[0]+1, cols=5)
-                    table2.style = "Table Grid"
-
-                    # En-tête du tableau
-                    hdr_cells2 = table2.rows[0].cells
-                    for i, text in enumerate(headers):
-                        hdr_cells2[i].text = text
-
-                    # Ajouter les responsables adjoints
-                    rows_data = []
-                    for i in range(df.shape[0]):
-                        numerotation += 1
-                        rows_data.append([str(numerotation),df.iloc[i]["Prénom"],df.iloc[i].Nom, df.iloc[i].Matricule, df.iloc[i].Service])
-                    numerotation = 1
-                    for i, row_data in enumerate(rows_data):
-                        try:
-                            row_cells = table2.rows[i+1].cells
-                            for j, text in enumerate(row_data):
-                                row_cells[j].text = text
-                        except Exception as e:
-                            logging.error("Une erreur est survenue", exc_info=True)  # Enregistre l'erreur avec stack trace
-
-                    doc.add_paragraph("", style="Heading 2")
-                    doc.add_paragraph("", style="Heading 2")
-
-            options = QFileDialog.Options()
-            file_path, _ = QFileDialog.getSaveFileName(self, "Enregistrer le fichier", "", "Documents Word (*.docx);;Tous les fichiers (*)", options=options)
-
-            if file_path:  # Vérifie si un chemin a été sélectionné
-                if not file_path.endswith(".docx"):  # Ajoute l'extension si nécessaire
-                    file_path += ".docx"
-                doc.save(file_path)
-                msg = QMessageBox()
-                msg.setWindowTitle("Succès")
-                msg.setText(f"Document word généré avec succès !")
-                msg.setIcon(QMessageBox.Icon.Information)
-                msg.exec()
-        except Exception as e:
-            logging.error("Une erreur est survenue", exc_info=True)  # Enregistre l'erreur avec stack trace
     def export_slot(self):
         try:
             conn = sqlite3.connect("database.db")
@@ -618,6 +565,197 @@ class MyApp(QMainWindow):
         except Exception as e:
             logging.error("Une erreur est survenue", exc_info=True)  # Enregistre l'erreur avec stack trace
 
+class GlassOverlay(QWidget):
+    def __init__(self, parent=None):
+        super().__init__(parent)
+        self.setGeometry(parent.rect())
+        self.setWindowFlags(Qt.FramelessWindowHint | Qt.Dialog)
+        self.setAttribute(Qt.WA_TranslucentBackground)
+        self.setAttribute(Qt.WA_DeleteOnClose)
+
+        # Layout central pour le dialog
+        layout = QVBoxLayout(self)
+        layout.setContentsMargins(0, 0, 0, 0)
+        layout.setAlignment(Qt.AlignCenter)
+
+        # Voile semi-transparent (optionnel, pour le contraste)
+        veil = QWidget(self)
+        veil.setStyleSheet("background-color: rgba(255,255,255,150); border-radius: 0px;")
+        veil.setGeometry(self.rect())
+
+        # Blur effect sur le parent
+        blur_effect = QGraphicsBlurEffect()
+        blur_effect.setBlurRadius(15)
+        veil.setGraphicsEffect(blur_effect)
+
+        # Dialog de chargement
+        self.loading = LoadingPage()
+        layout.addWidget(self.loading)
+        self.loading.show()
+
+class LoadingPage(QDialog):
+    def __init__(self):
+        super().__init__()
+        self.setWindowFlags(Qt.FramelessWindowHint)
+        self.setAttribute(Qt.WA_TranslucentBackground)
+        self.setModal(True)
+
+        layout = QVBoxLayout()
+        layout.setContentsMargins(20, 20, 20, 20)
+        layout.setSpacing(15)
+
+        # GIF
+        label = QLabel()
+        label.setFixedSize(250, 250)
+        label.setAlignment(Qt.AlignCenter)
+        movie = QMovie("icons/loading2.gif")
+        movie.setScaledSize(label.size())
+        label.setMovie(movie)
+        movie.start()
+        layout.addWidget(label, alignment=Qt.AlignCenter)
+
+        self.setLayout(layout)
+        self.setStyleSheet("""
+            background-color: rgba(255,255,255,150);
+            border-radius: 12px;
+        """)
+
+class GenerateWordThread(QThread):
+    progress = pyqtSignal(int)
+    finish = pyqtSignal(bool)
+    def __init__(self, parent=None):
+        super().__init__(parent)
+        self.parent = parent
+
+    def run(self):
+        try:
+            con = sqlite3.connect("database.db")
+            main_df = pd.read_sql_query("select * from academy",con)
+
+            dfs = query(self.parent.widget.academy_combo)
+            academies = main_df['AE'].unique().tolist() # Avoir la liste des academies
+            academies_dict = {} # Dictionnaire qui contiendra les noms d'academies comme clé et 0 comme valeur
+            for academie in academies:
+                academies_dict[academie] = 0
+            doc = Document()
+            style = doc.styles['Normal']
+            style.paragraph_format.line_spacing = Pt(10)
+            local_progress = 0
+            for i,df in enumerate(dfs):
+                if not df.empty:
+                    if academies_dict[df.iloc[0,0]] == 0: # Si la valeur d'une academie est 0 donc elle n'est pas encore afficher
+                        academiesLen = main_df["AE"].unique().tolist() # Obtenir le nombre d'académies
+                        current_academie_index = academiesLen.index(df.iloc[0,0])# Obtenir l'index de l'académie actuelle
+                        titre = doc.add_paragraph(style="Heading 1")
+                        titre.add_run(f"{current_academie_index}/ ACADÉMIE D'ENSEIGNEMENT DE : {df.iloc[0,0]}").bold = True
+                        titre.alignment = WD_PARAGRAPH_ALIGNMENT.CENTER
+                        academies_dict[df.iloc[0,0]] += 1
+
+                        # Extraction des superviseurs
+                        superviseurs = main_df[main_df['Nb salle'].isnull()]
+                        superviseurs = superviseurs[superviseurs['AE']==df.iloc[0,0]]
+
+                        # Ajouter la section Superviseurs
+                        doc.add_paragraph("SUPERVISEURS :", style="Heading 2")
+                        # Création du tableau principal
+                        table = doc.add_table(rows=superviseurs.shape[0]+1, cols=5)
+                        table.style = "Table Grid"
+                        # Remplir l'en-tête du tableau
+                        hdr_cells = table.rows[0].cells
+                        headers = ["N° d'ordre", "Prénoms", "Noms", "N° Mle", "Service"]
+                        for h, text in enumerate(headers):
+                            hdr_cells[h].text = text
+                        for i in range(superviseurs.shape[0]):
+                            superviseur_prenom = superviseurs.iloc[i]['Prénom']
+                            superviseur_nom = superviseurs.iloc[i]['Nom']
+                            superviseur_matricule = superviseurs.iloc[i]['Matricule']
+                            superviseur_service = superviseurs.iloc[i]['Service']
+                            row_cells = table.rows[i].cells
+                            row_data = ["-", superviseur_prenom, superviseur_nom, superviseur_matricule, superviseur_service]
+                            for i, text in enumerate(row_data):
+                                row_cells[i].text = str(text)
+                    doc.add_paragraph("", style=style)  # Ajouter un saut de ligne entre les centres
+                    # Ajouter le titre du centre
+                    centre = df.iloc[0,1]
+                    academieCenterLen = main_df[main_df['AE']==df.iloc[0,0]].Centre.unique().tolist() # Obtenir le nombre de centres de cette académie
+                    centre_index = academieCenterLen.index(centre) + 1 # Obtenir l'index du centre actuel
+                    salle = int(df.iloc[0,-1])
+                    titre_a = doc.add_paragraph()
+                    titre_a.add_run(f"{centre_index}- CENTRE DU {centre}").bold = True
+                    titre_a.alignment = WD_PARAGRAPH_ALIGNMENT.LEFT
+                    titre_a.add_run(" " * 50 + f"{str(salle)}").bold = True  # Espacer le numéro du centre
+                    # Ajouter la section RESPONSABLE
+                    doc.add_paragraph("RESPONSABLE :", style="Heading 2")
+                    # Création du tableau principal
+                    table = doc.add_table(rows=2, cols=5)
+                    table.style = "Table Grid"
+                    # Remplir l'en-tête du tableau
+                    hdr_cells = table.rows[0].cells
+                    headers = ["N° d'ordre", "Prénoms", "Noms", "N° Mle", "Service"]
+                    for h, text in enumerate(headers):
+                        hdr_cells[h].text = text
+                    # Ajouter le responsable
+                    presidents_liste = presidents(self.parent.widget.academy_combo)
+                    current_president = presidents_liste[presidents_liste['Centre']==centre]
+                    # Si aucune ligne trouvée
+                    if current_president.empty:
+                        president_prenom = ""
+                        president_nom = ""
+                        president_matricule = ""
+                        president_service = ""
+                    else:
+                        ligne = current_president.iloc[0]  # On prend la première ligne trouvée
+
+                        president_prenom = ligne.get('Prénom', "")
+                        president_nom = ligne.get('Nom', "")
+                        president_matricule = ligne.get('Matricule', "")
+                        president_service = ligne.get('Service', "")
+                    row_cells = table.rows[1].cells
+                    numerotation = 1 # Numérotation des lignes de noms
+                    row_data = [str(numerotation), president_prenom, president_nom, president_matricule, president_service]
+                    for i, text in enumerate(row_data):
+                        row_cells[i].text = str(text)
+
+                    # Ajouter la section RESPONSABLES ADJOINTS
+                    doc.add_paragraph("RESPONSABLES ADJOINTS :", style="Heading 2")
+
+                    # Création du second tableau
+                    table2 = doc.add_table(rows=df.shape[0]+1, cols=5)
+                    table2.style = "Table Grid"
+
+                    # En-tête du tableau
+                    hdr_cells2 = table2.rows[0].cells
+                    for i, text in enumerate(headers):
+                        hdr_cells2[i].text = text
+
+                    # Ajouter les responsables adjoints
+                    rows_data = []
+                    for i in range(df.shape[0]):
+                        numerotation += 1
+                        rows_data.append([str(numerotation),df.iloc[i]["Prénom"],df.iloc[i].Nom, df.iloc[i].Matricule, df.iloc[i].Service])
+                    numerotation = 1
+                    for i, row_data in enumerate(rows_data):
+                        try:
+                            row_cells = table2.rows[i+1].cells
+                            for j, text in enumerate(row_data):
+                                row_cells[j].text = text
+                        except Exception as e:
+                            logging.error("Une erreur est survenue", exc_info=True)  # Enregistre l'erreur avec stack trace
+                local_progress += 1
+                self.progress.emit(int((local_progress*100)/len(dfs)))
+            options = QFileDialog.Options()
+            file_path, _ = QFileDialog.getSaveFileName(self.parent, "Enregistrer le fichier", "", "Documents Word (*.docx);;Tous les fichiers (*)", options=options)
+
+            if file_path:  # Vérifie si un chemin a été sélectionné
+                if not file_path.endswith(".docx"):  # Ajoute l'extension si nécessaire
+                    file_path += ".docx"
+                doc.save(file_path)
+                self.finish.emit(True)
+                return
+            self.finish.emit(False)
+        except Exception as e:
+            logging.error("Une erreur est survenue", exc_info=True)  # Enregistre l'erreur avec stack trace
+
 class Vice_president(QFrame):
     def __init__(self,prenom,nom,matricule,service,categorie,poste, telephone, vice_group_layout:QVBoxLayout):
         super().__init__()
@@ -708,7 +846,10 @@ def query(academie_combo:QComboBox):
             for k,v in conditions.items():
                 if int(nb_salle) in v:
                     nb_vice_president = k
-            df_list.append(centre_df[1:nb_vice_president+1])
+            try:
+                df_list.append(centre_df[1:nb_vice_president+1])
+            except IndexError:
+                df_list.append(centre_df[1:])
     else:
         df = pd.read_sql_query(f"select * from academy WHERE AE='{academie_combo.currentText()}'",conn)
         centres = df.Centre.unique() # Récuperer les valeurs uniques des centres
@@ -721,7 +862,10 @@ def query(academie_combo:QComboBox):
             for k,v in conditions.items():
                 if int(nb_salle) in v:
                     nb_vice_president = k
-            df_list.append(centre_df[1:nb_vice_president+1])
+            try:
+                df_list.append(centre_df[1:nb_vice_president+1])
+            except IndexError:
+                df_list.append(centre_df[1:])
     return  df_list# Séléctionner les vice présidents nécésairent
 
 def presidents(academie_combo:QComboBox):

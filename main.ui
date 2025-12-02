@@ -6,47 +6,180 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>816</width>
-    <height>421</height>
+    <width>1552</width>
+    <height>945</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Form</string>
   </property>
+  <property name="styleSheet">
+   <string notr="true">background-color: qlineargradient(spread:pad, x1:0.481, y1:0.0397727, x2:0.484442, y2:0.142, stop:0.109 rgba(10, 21, 72, 255), stop:1 rgba(24, 29, 52, 255));</string>
+  </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <property name="spacing">
-    <number>17</number>
+    <number>20</number>
+   </property>
+   <property name="topMargin">
+    <number>20</number>
    </property>
    <item>
-    <layout class="QHBoxLayout" name="horizontalLayout_2">
-     <item>
-      <widget class="QLabel" name="label">
-       <property name="font">
-        <font>
-         <pointsize>11</pointsize>
-         <weight>75</weight>
-         <bold>true</bold>
-        </font>
-       </property>
-       <property name="text">
-        <string>SIGE-DECISIONS</string>
-       </property>
-       <property name="alignment">
-        <set>Qt::AlignCenter</set>
-       </property>
-      </widget>
-     </item>
-    </layout>
-   </item>
-   <item>
-    <layout class="QHBoxLayout" name="horizontalLayout" stretch="1,1,0,0,0,0,0,0">
+    <layout class="QHBoxLayout" name="horizontalLayout" stretch="0,0,0,0,0,0,0,0,0,0">
      <item>
       <widget class="QComboBox" name="academy_combo">
+       <property name="minimumSize">
+        <size>
+         <width>150</width>
+         <height>40</height>
+        </size>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">QComboBox {
+    background-color: #fff;
+    border: 1px solid #d0d0d0;
+    border-radius: 12px;
+    padding: 6px 12px;
+    font-size: 14px;
+}
+
+QComboBox:hover {
+    border: 1px solid #b0b0b0;
+}
+
+QComboBox:focus {
+    border: 1px solid #5a9cff;
+    background-color: #ffffff;
+}
+
+QComboBox::drop-down {
+    width: 30px;
+    border: none;
+    background: transparent;
+}
+
+QComboBox::down-arrow {
+    image: url(&quot;icons/arrow-down.svg&quot;);
+}
+
+QComboBox QAbstractItemView {
+    background-color: #2a2a3c;       /* fond du menu déroulant */
+    color: #ffffff;                   /* couleur du texte */
+    selection-background-color: #4a90e2;  /* couleur de survol */
+    selection-color: #ffffff;
+    border-radius: 6px;
+}</string>
+       </property>
        <item>
         <property name="text">
          <string>Tout</string>
         </property>
        </item>
+      </widget>
+     </item>
+     <item>
+      <spacer name="horizontalSpacer_2">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item>
+      <widget class="QFrame" name="frame">
+       <property name="minimumSize">
+        <size>
+         <width>400</width>
+         <height>40</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>400</width>
+         <height>16777215</height>
+        </size>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">QFrame {
+    background-color: #ffffff;
+    border: 1px solid #d0d0d0;
+    border-radius: 10px;
+}
+
+QFrame:hover {
+    border: 1px solid #b5b5b5;
+}
+
+QLineEdit {
+    border: none;
+    background: transparent;
+    padding: 4px;
+    font-size: 14px;
+    color: #333333;
+}
+
+QLineEdit:focus {
+    outline: none;
+    border: none;
+}
+
+QToolButton {
+    background: transparent;
+    border: none;
+    padding: 4px;
+}
+
+QToolButton:hover {
+    background-color: #eeeeee;
+    border-radius: 6px;
+}</string>
+       </property>
+       <property name="frameShape">
+        <enum>QFrame::StyledPanel</enum>
+       </property>
+       <property name="frameShadow">
+        <enum>QFrame::Raised</enum>
+       </property>
+       <layout class="QHBoxLayout" name="horizontalLayout_4">
+        <property name="leftMargin">
+         <number>2</number>
+        </property>
+        <property name="topMargin">
+         <number>2</number>
+        </property>
+        <property name="rightMargin">
+         <number>2</number>
+        </property>
+        <property name="bottomMargin">
+         <number>2</number>
+        </property>
+        <item>
+         <widget class="QLineEdit" name="lineEdit">
+          <property name="styleSheet">
+           <string notr="true">background: transparent;
+border: none;</string>
+          </property>
+          <property name="placeholderText">
+           <string>Rechercher</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QToolButton" name="toolButton_5">
+          <property name="text">
+           <string>...</string>
+          </property>
+          <property name="icon">
+           <iconset resource="rssrce.qrc">
+            <normaloff>:/newPrefix/icons/search.svg</normaloff>:/newPrefix/icons/search.svg</iconset>
+          </property>
+         </widget>
+        </item>
+       </layout>
       </widget>
      </item>
      <item>
@@ -63,7 +196,7 @@
       </spacer>
      </item>
      <item>
-      <widget class="QPushButton" name="export_2">
+      <widget class="QToolButton" name="export_2">
        <property name="sizePolicy">
         <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
          <horstretch>0</horstretch>
@@ -72,7 +205,7 @@
        </property>
        <property name="minimumSize">
         <size>
-         <width>80</width>
+         <width>100</width>
          <height>30</height>
         </size>
        </property>
@@ -80,9 +213,31 @@
         <cursorShape>PointingHandCursor</cursorShape>
        </property>
        <property name="styleSheet">
-        <string notr="true">background-color: rgb(0, 170, 127);
-border-radius: 5px;
-color: rgb(255, 255, 255);</string>
+        <string notr="true">QToolButton {
+	background-color: rgb(67, 124, 167);
+    border: 1px solid #d0d0d0;
+    border-radius: 8px;
+    padding: 6px;
+	color: #000;
+}
+
+QToolButton:hover {
+    background-color: #f0f0f0;
+    border: 1px solid #b5b5b5;
+}
+
+QToolButton:pressed {
+    background-color: #e0e0e0;
+}
+
+QToolButton:checked {
+    background-color: #e6f0ff;
+    border: 1px solid #409EFF;
+}
+
+QToolButton:focus {
+    outline: none;
+}</string>
        </property>
        <property name="text">
         <string>Exporter</string>
@@ -90,6 +245,9 @@ color: rgb(255, 255, 255);</string>
        <property name="icon">
         <iconset resource="rssrce.qrc">
          <normaloff>:/newPrefix/icons/microsoft-excel-icon-png-logo-5.png</normaloff>:/newPrefix/icons/microsoft-excel-icon-png-logo-5.png</iconset>
+       </property>
+       <property name="toolButtonStyle">
+        <enum>Qt::ToolButtonTextBesideIcon</enum>
        </property>
       </widget>
      </item>
@@ -101,9 +259,34 @@ color: rgb(255, 255, 255);</string>
          <height>30</height>
         </size>
        </property>
+       <property name="cursor">
+        <cursorShape>PointingHandCursor</cursorShape>
+       </property>
        <property name="styleSheet">
-        <string notr="true">background-color: rgb(85, 85, 255);
-border-radius: 5px;</string>
+        <string notr="true">QToolButton {
+	background-color: rgb(67, 124, 167);
+    border: 1px solid #d0d0d0;
+    border-radius: 8px;
+    padding: 6px;
+}
+
+QToolButton:hover {
+    background-color: #f0f0f0;
+    border: 1px solid #b5b5b5;
+}
+
+QToolButton:pressed {
+    background-color: #e0e0e0;
+}
+
+QToolButton:checked {
+    background-color: #e6f0ff;
+    border: 1px solid #409EFF;
+}
+
+QToolButton:focus {
+    outline: none;
+}</string>
        </property>
        <property name="text">
         <string>...</string>
@@ -126,13 +309,29 @@ border-radius: 5px;</string>
         <cursorShape>PointingHandCursor</cursorShape>
        </property>
        <property name="styleSheet">
-        <string notr="true">QToolButton{
-	background-color: rgb(0, 186, 0);
-border: none;
-border-radius: 5px;
+        <string notr="true">QToolButton {
+    background-color: rgb(67, 124, 167);
+    border: 1px solid #d0d0d0;
+    border-radius: 8px;
+    padding: 6px;
 }
-QToolButton:hover{
-	background-color: rgb(0, 218, 0);
+
+QToolButton:hover {
+    background-color: #f0f0f0;
+    border: 1px solid #b5b5b5;
+}
+
+QToolButton:pressed {
+    background-color: #e0e0e0;
+}
+
+QToolButton:checked {
+    background-color: #e6f0ff;
+    border: 1px solid #409EFF;
+}
+
+QToolButton:focus {
+    outline: none;
 }</string>
        </property>
        <property name="text">
@@ -156,10 +355,29 @@ QToolButton:hover{
         <cursorShape>PointingHandCursor</cursorShape>
        </property>
        <property name="styleSheet">
-        <string notr="true">QToolButton{
-border: none;
-border-radius: 5px;
-	background-color: rgb(255, 255, 255);
+        <string notr="true">QToolButton {
+    background-color: rgb(67, 124, 167);
+    border: 1px solid #d0d0d0;
+    border-radius: 8px;
+    padding: 6px;
+}
+
+QToolButton:hover {
+    background-color: #f0f0f0;
+    border: 1px solid #b5b5b5;
+}
+
+QToolButton:pressed {
+    background-color: #e0e0e0;
+}
+
+QToolButton:checked {
+    background-color: #e6f0ff;
+    border: 1px solid #409EFF;
+}
+
+QToolButton:focus {
+    outline: none;
 }</string>
        </property>
        <property name="text">
@@ -183,13 +401,29 @@ border-radius: 5px;
         <cursorShape>PointingHandCursor</cursorShape>
        </property>
        <property name="styleSheet">
-        <string notr="true">QToolButton{
-border: none;
-background-color: rgba(255, 0, 0, 30);
-border-radius: 5px;
+        <string notr="true">QToolButton {
+    background-color: rgb(67, 124, 167);
+    border: 1px solid #d0d0d0;
+    border-radius: 8px;
+    padding: 6px;
 }
-QToolButton:hover{
-	background-color: rgb(255, 255, 255);
+
+QToolButton:hover {
+    background-color: #f0f0f0;
+    border: 1px solid #b5b5b5;
+}
+
+QToolButton:pressed {
+    background-color: #e0e0e0;
+}
+
+QToolButton:checked {
+    background-color: #e6f0ff;
+    border: 1px solid #409EFF;
+}
+
+QToolButton:focus {
+    outline: none;
 }</string>
        </property>
        <property name="text">
@@ -219,9 +453,32 @@ QToolButton:hover{
         <cursorShape>PointingHandCursor</cursorShape>
        </property>
        <property name="styleSheet">
-        <string notr="true">background-color: rgb(0, 0, 255);
-color: rgb(255, 255, 255);
-border-radius: 10px;</string>
+        <string notr="true">QToolButton {
+    
+	background-color: rgb(85, 170, 255);
+    border: 1px solid #d0d0d0;
+    border-radius: 8px;
+    padding: 6px;
+	color: #000;
+}
+
+QToolButton:hover {
+    background-color: #f0f0f0;
+    border: 1px solid #b5b5b5;
+}
+
+QToolButton:pressed {
+    background-color: #e0e0e0;
+}
+
+QToolButton:checked {
+    background-color: #e6f0ff;
+    border: 1px solid #409EFF;
+}
+
+QToolButton:focus {
+    outline: none;
+}</string>
        </property>
        <property name="text">
         <string>Generer</string>
@@ -231,69 +488,90 @@ border-radius: 10px;</string>
     </layout>
    </item>
    <item>
-    <layout class="QHBoxLayout" name="horizontalLayout_3">
-     <item>
-      <widget class="QFrame" name="frame">
-       <property name="minimumSize">
-        <size>
-         <width>0</width>
-         <height>30</height>
-        </size>
-       </property>
-       <property name="maximumSize">
-        <size>
-         <width>400</width>
-         <height>16777215</height>
-        </size>
-       </property>
-       <property name="styleSheet">
-        <string notr="true">background-color: rgb(255, 255, 255);
-border-radius: 15px;</string>
-       </property>
-       <property name="frameShape">
-        <enum>QFrame::StyledPanel</enum>
-       </property>
-       <property name="frameShadow">
-        <enum>QFrame::Raised</enum>
-       </property>
-       <layout class="QHBoxLayout" name="horizontalLayout_4">
-        <item>
-         <widget class="QLineEdit" name="lineEdit">
-          <property name="styleSheet">
-           <string notr="true">background: transparent;
-border: none;</string>
-          </property>
-          <property name="placeholderText">
-           <string>Rechercher</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QToolButton" name="toolButton_5">
-          <property name="text">
-           <string>...</string>
-          </property>
-          <property name="icon">
-           <iconset resource="rssrce.qrc">
-            <normaloff>:/newPrefix/icons/search.svg</normaloff>:/newPrefix/icons/search.svg</iconset>
-          </property>
-         </widget>
-        </item>
-       </layout>
-      </widget>
-     </item>
-    </layout>
-   </item>
-   <item>
     <widget class="QTableWidget" name="table">
      <property name="styleSheet">
-      <string notr="true">border:none;</string>
+      <string notr="true">QTableWidget {
+    background-color: transparent;
+    gridline-color: #3c3f51;
+    border: 1px solid #2d2f3c;
+    border-radius: 10px;
+    color: #e5e7ef;
+    font-size: 13px;
+    selection-background-color: rgba(65, 105, 225, 120);
+    selection-color: #ffffff;
+    alternate-background-color: rgba(255, 255, 255, 0.03);
+}
+
+/* Enlever le &quot;focus rectangle&quot; en pointillés */
+QTableWidget:focus {
+    outline: none;
+}
+
+/* Header horizontal */
+QHeaderView::section {
+    background-color: rgba(255, 255, 255, 0.08);
+    color: #f0f0f0;
+    padding: 6px;
+    border: none;
+    border-right: 1px solid rgba(255, 255, 255, 0.05);
+    font-weight: bold;
+}
+
+/* Dernière colonne sans bordure droite */
+QHeaderView::section:last {
+    border-right: none;
+}
+
+/* Header vertical (optionnel) */
+QHeaderView::section:vertical {
+    background-color: rgba(255, 255, 255, 0.08);
+}
+
+/* Hover sur une ligne */
+QTableWidget::item:hover {
+    background-color: rgba(255, 255, 255, 0.07);
+}
+
+/* Lignes sélectionnées */
+QTableWidget::item:selected {
+    background-color: rgba(70, 130, 180, 150);
+    color: white;
+}
+
+/* Scrollbar style moderne */
+QScrollBar:vertical {
+    background: transparent;
+    width: 10px;
+    margin: 2px;
+}
+
+QScrollBar::handle:vertical {
+    background: rgba(255, 255, 255, 0.25);
+    border-radius: 5px;
+}
+
+QScrollBar::handle:vertical:hover {
+    background: rgba(255, 255, 255, 0.35);
+}
+
+QScrollBar::add-line,
+QScrollBar::sub-line {
+    height: 0px;
+}
+
+QScrollBar::add-page,
+QScrollBar::sub-page {
+    background: none;
+}</string>
      </property>
      <property name="alternatingRowColors">
       <bool>true</bool>
      </property>
      <attribute name="horizontalHeaderCascadingSectionResizes">
       <bool>true</bool>
+     </attribute>
+     <attribute name="horizontalHeaderDefaultSectionSize">
+      <number>108</number>
      </attribute>
      <attribute name="horizontalHeaderShowSortIndicator" stdset="0">
       <bool>true</bool>

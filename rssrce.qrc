@@ -3,10 +3,10 @@
     <file>icons/microsoft-excel-icon-png-logo-5.png</file>
     <file>icons/rotate-ccw.svg</file>
     <file>icons/rotate-ccw.svg</file>
-    <file>icons/upload.svg</file>
     <file>icons/search.svg</file>
     <file>icons/edit.svg</file>
-    <file>icons/plus.svg</file>
     <file>icons/trash.svg</file>
+    <file>icons/plus.svg</file>
+    <file>icons/upload.svg</file>
   </qresource>
 </RCC>
