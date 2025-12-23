@@ -306,8 +306,8 @@ class MyApp(QMainWindow):
         con.close()
     def upload(self):
         options = QFileDialog.Options()
-        
-        file_path, _ = QFileDialog.getOpenFileName(self, "Choisir un fichier", docSaveDir, "Tous les fichiers (*);;Fichiers Excel (*.xlsx)", options=options)
+        options |= QFileDialog.DontUseNativeDialog
+        file_path, _ = QFileDialog.getOpenFileName(self, "Choisir un fichier", docSaveDir if docSaveDir else "", "Tous les fichiers (*);;Fichiers Excel (*.xlsx)", options=options)
         if file_path:
             try:
                 loading = LoadingPage()
@@ -572,7 +572,8 @@ class MyApp(QMainWindow):
         self.statusBarProgress.setVisible(True)
         thread = GenerateWordThread(self)
         thread.progress.connect(lambda value: self.statusBarProgress.setValue(value))
-        thread.start()
+        thread.request_save_path.connect(lambda: self.word_open_save_dialog(thread))
+        thread.save_path_received.connect(lambda path: self.save_doc(path, thread))
         thread.finish.connect(lambda: loading_dialog.close())
         thread.finish.connect(lambda success: QMessageBox.information(self, "Succès", "Décision générée avec succès !") if success else QMessageBox.warning(self, "Annulé", "Génération du document annulée."))
         thread.finish.connect(lambda: self.statusBarProgress.setValue(0))
@@ -580,13 +581,40 @@ class MyApp(QMainWindow):
         thread.finish.connect(thread.quit)
         thread.finish.connect(thread.wait)
 
+        thread.start()
+
+    def word_open_save_dialog(self, thread:QThread):
+        options = QFileDialog.Options()
+        options |= QFileDialog.DontUseNativeDialog
+
+        start_dir = str(Path.home() / "Documents")
+
+        path, _ = QFileDialog.getSaveFileName(
+            self,
+            "Enregistrer le fichier",
+            start_dir,
+            "Documents Word (*.docx)"
+        )
+
+        thread.save_path_received.emit(path)
+
+    def save_doc(self, path, thread):
+        if path:
+            if not path.endswith(".docx"):
+                path += ".docx"
+            thread.doc.save(path)
+            thread.finish.emit(True)
+        else:
+            thread.finish.emit(False)
+
     def export_slot(self):
         try:
             conn = sqlite3.connect(os.path.join(folder, "database.db"))
             df = pd.read_sql_query("SELECT * FROM academy",conn)
             df.sort_values(by=["AE","Centre"],inplace=True)
             options = QFileDialog.Options()
-            file_path, _ = QFileDialog.getSaveFileName(self, "Enregistrer le fichier", docSaveDir, "Tous les fichiers (*)", options=options)
+            options |= QFileDialog.DontUseNativeDialog
+            file_path, _ = QFileDialog.getSaveFileName(self, "Enregistrer le fichier", docSaveDir if docSaveDir else "", "Tous les fichiers (*)", options=options)
 
             if file_path:  # Vérifie si un chemin a été sélectionné
                 if not file_path.endswith(".xlsx"):  # Ajoute l'extension si nécessaire
@@ -949,9 +977,12 @@ class LoadingPage(QDialog):
 class GenerateWordThread(QThread):
     progress = pyqtSignal(int)
     finish = pyqtSignal(bool)
+    request_save_path = pyqtSignal()
+    save_path_received = pyqtSignal(str)
     def __init__(self, parent=None):
         super().__init__(parent)
         self.parent = parent
+        self.doc = None
 
     def run(self):
         conditions = {1:[1,2,3],2:[4,5,6,7],3:[8,9,10,11],4:[12,13,14,15],5:[16,17,18,19],6:[20,21,22,23],7:[24,25,26,27],
@@ -1075,8 +1106,8 @@ class GenerateWordThread(QThread):
                             logging.error("Une erreur est survenue", exc_info=True)  # Enregistre l'erreur avec stack trace
                 local_progress += 1
                 self.progress.emit(int((local_progress*100)/len(dfs)))
-            options = QFileDialog.Options()
-            file_path, _ = QFileDialog.getSaveFileName(self.parent, "Enregistrer le fichier", docSaveDir, "Documents Word (*.docx);;Tous les fichiers (*)", options=options)
+            self.doc = doc  # garder le document en mémoire
+            self.request_save_path.emit()
 
             if file_path:  # Vérifie si un chemin a été sélectionné
                 if not file_path.endswith(".docx"):  # Ajoute l'extension si nécessaire
