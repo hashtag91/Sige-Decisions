@@ -156,7 +156,6 @@ class MyApp(QMainWindow):
         if not os.path.exists(license_path):
             write_licence(expiration)
 
-        print(read_licence())
         # 2️ vérifier la licence
         if read_licence():
             self.setCentralWidget(self.widget)
@@ -1415,7 +1414,3 @@ app = QApplication([])
 window = MyApp()
 window.show()
 app.exec_()
-
-"""
-28 - 31 = 8
-"""
